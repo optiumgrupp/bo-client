@@ -1,1 +1,21 @@
-<pre>{{ clients | async | json }}</pre>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> id </th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Kliendi nimi </th>
+    <td mat-cell *matCellDef="let element">{{ element.firstName }} {{ element.lastName }}</td>
+  </ng-container>
+  <ng-container matColumnDef="dateOfBirth">
+    <th mat-header-cell *matHeaderCellDef> Sünnikuupäev </th>
+    <td mat-cell *matCellDef="let element">
+      {{
+        element | numbersToDate: fieldnames | amDateFormat: 'L'
+      }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
