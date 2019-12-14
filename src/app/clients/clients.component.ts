@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-clients',
+  selector: 'bo-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss']
 })

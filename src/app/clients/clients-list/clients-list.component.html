@@ -21,7 +21,14 @@
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let client" [attr.colspan]="displayedColumns.length">
       <div [@detailExpand]="client === expandedElement ? 'expanded' : 'collapsed'" class="detail-block">
-        {{ client | json }}
+        <div class="flex wrap pb15 pt15">
+          <div *ngFor="let field of displayedDataFields" class="col-4 mb15">
+            <bo-data-display
+              [value]="client[field.name]"
+              [label]="field.label || field.name"
+            ></bo-data-display>
+          </div>
+        </div>
       </div>
     </td>
   </ng-container>

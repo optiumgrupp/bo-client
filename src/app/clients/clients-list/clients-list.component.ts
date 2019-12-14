@@ -1,14 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
-import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Client } from '../../interfaces/client';
 import { FieldNames } from '../../pipes/numbers-to-date.pipe';
 import { ClientsService } from '../../services/clients.service';
 
 @Component({
-  selector: 'app-clients-list',
+  selector: 'bo-clients-list',
   templateUrl: './clients-list.component.html',
   styleUrls: ['./clients-list.component.scss'],
   animations: [
@@ -22,6 +21,62 @@ import { ClientsService } from '../../services/clients.service';
 export class ClientsListComponent implements OnInit {
   public dataSource = new MatTableDataSource<Client>([]);
   public displayedColumns: string[] = ['id', 'name', 'dateOfBirth'];
+  public displayedDataFields: { name: string; label?: string }[] = [
+    {
+      name: 'registrationDate',
+      label: 'Registreerimis kuup.',
+    },
+    {
+      name: 'email',
+      label: 'E-mail',
+    },
+    {
+      name: 'phone',
+      label: 'Telefon',
+    },
+    {
+      name: 'address',
+      label: 'aadress',
+    },
+    {
+      name: 'MFD',
+    },
+    {
+      name: 'gSPHos',
+    },
+    {
+      name: 'gSPHod',
+    },
+    {
+      name: 'gCYLod',
+    },
+    {
+      name: 'gCYLos',
+    },
+    {
+      name: 'gAXISod',
+    },
+    {
+      name: 'gAXISos',
+    },
+    {
+      name: 'gADDod',
+    },
+    {
+      name: 'gADDos',
+    },
+    {
+      name: 'gPD',
+    },
+    {
+      name: 'cBC',
+    },
+    {
+      name: 'notes',
+      label: 'Märkmed'
+    },
+  ];
+
   public fieldnames: FieldNames = {
     day: 'birthDay',
     month: 'birthMonth',

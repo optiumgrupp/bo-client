@@ -1,5 +1,10 @@
 .client-row {
   cursor: pointer;
+  transition: background-color 120ms;
+}
+
+.client-row:hover {
+  background-color: #fafafa;
 }
 
 .expanded-row {
@@ -7,6 +12,6 @@
 }
 
 .detail-block {
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
 }
