@@ -1,8 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
-import { first } from 'rxjs/operators';
-import { Client } from '../../interfaces/client';
+import { first, startWith } from 'rxjs/operators';
+import { Client, ClientFilters } from '../../interfaces/client';
 import { FieldNames } from '../../pipes/numbers-to-date.pipe';
 import { ClientsService } from '../../services/clients.service';
 
@@ -77,6 +78,13 @@ export class ClientsListComponent implements OnInit {
     },
   ];
 
+  public filtersForm = new FormGroup({
+    firstName: new FormControl(null),
+    lastName: new FormControl(null),
+    birthYear: new FormControl(null),
+    birthMonth: new FormControl(null),
+    birthDay: new FormControl(null),
+  });
   public fieldnames: FieldNames = {
     day: 'birthDay',
     month: 'birthMonth',
@@ -89,7 +97,13 @@ export class ClientsListComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
-    this.clientsService.getClients().pipe(first()).subscribe((clients) => {
+    this.filtersForm.valueChanges.pipe(startWith(this.filtersForm.value)).subscribe((values: ClientFilters) => {
+      this.handleSearch(values);
+    });
+  }
+
+  private handleSearch(filters: ClientFilters) {
+    this.clientsService.getClients(filters).pipe(first()).subscribe((clients) => {
       this.dataSource.data = clients;
     });
   }

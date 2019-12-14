@@ -24,3 +24,11 @@ export interface Client {
   cBC?: string;
   notes?: string;
 }
+
+export interface ClientFilters {
+  firstName?: string;
+  lastName?: string;
+  birthYear?: number;
+  birthMonth?: number;
+  birthDay?: number;
+}
