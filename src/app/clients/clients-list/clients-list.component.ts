@@ -1,9 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, PageEvent } from '@angular/material';
 import { first, startWith } from 'rxjs/operators';
 import { Client, ClientFilters } from '../../interfaces/client';
+import { Pagination } from '../../interfaces/pagination';
 import { FieldNames } from '../../pipes/numbers-to-date.pipe';
 import { ClientsService } from '../../services/clients.service';
 
@@ -91,6 +92,11 @@ export class ClientsListComponent implements OnInit {
     year: 'birthDate',
   } ;
   public expandedElement: Client = null;
+  public pagination: Pagination = {
+    perPage: 25,
+    page: 1,
+    total: 0,
+  };
 
   constructor(
     private clientsService: ClientsService,
@@ -98,13 +104,21 @@ export class ClientsListComponent implements OnInit {
 
   public ngOnInit() {
     this.filtersForm.valueChanges.pipe(startWith(this.filtersForm.value)).subscribe((values: ClientFilters) => {
-      this.handleSearch(values);
+      this.handleSearch(values, this.pagination);
     });
   }
 
-  private handleSearch(filters: ClientFilters) {
-    this.clientsService.getClients(filters).pipe(first()).subscribe((clients) => {
-      this.dataSource.data = clients;
+  public pageChange(change: PageEvent) {
+    this.pagination.page = change.pageIndex + 1;
+    this.pagination.perPage = change.pageSize;
+
+    this.handleSearch(this.filtersForm.value, this.pagination);
+  }
+
+  private handleSearch(filters: ClientFilters, pagination: Pagination) {
+    this.clientsService.getClients(filters, pagination).pipe(first()).subscribe((result) => {
+      this.dataSource.data = result.data;
+      this.pagination.total = result.pagination.total;
     });
   }
 }

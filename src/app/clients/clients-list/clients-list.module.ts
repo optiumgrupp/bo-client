@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule, MatTableModule } from '@angular/material';
+import { MatInputModule, MatPaginatorModule, MatTableModule } from '@angular/material';
 import { MomentModule } from 'ngx-moment';
 import { DataDisplayModule } from '../../components/data-display/data-display.module';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -20,6 +20,7 @@ import { ClientsListComponent } from './clients-list.component';
     DataDisplayModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
   ]
 })
 export class ClientsListModule { }
